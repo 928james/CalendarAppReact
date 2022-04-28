@@ -1,5 +1,6 @@
 // routes
 import Router from './routes';
+import './calendar.css'
 // theme
 import ThemeProvider from './theme';
 // components
@@ -11,9 +12,9 @@ import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 export default function App() {
   return (
     <ThemeProvider>
-      <ScrollToTop />
-      <BaseOptionChartStyle />
-      <Router />
+        <ScrollToTop />
+        <BaseOptionChartStyle />
+        <Router />
     </ThemeProvider>
   );
 }
