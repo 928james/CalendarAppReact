@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
+import { alpha , styled} from '@mui/material/styles';
+import { Box, Link, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
@@ -28,6 +28,16 @@ const MENU_OPTIONS = [
   },
 ];
 
+const AccountStyle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width : '250px',
+  height:'100px',
+  alignItems: 'center',
+  padding: theme.spacing(2, 2.5),
+  borderRadius: Number(theme.shape.borderRadius) * 1.5,
+  backgroundColor: theme.palette.grey[500_12],
+}));
+
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
@@ -45,66 +55,54 @@ export default function AccountPopover() {
 
   return (
     <>
-      <IconButton
-        ref={anchorRef}
-        onClick={handleOpen}
-        sx={{
-          p: 0,
-          ...(open && {
-            '&:before': {
-              zIndex: 1,
-              content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-            },
-          }),
-        }}
-      >
-        <Avatar src={account.photoURL} alt="photoURL" />
-      </IconButton>
+      <Box sx={{ mb: 5, mx: 2.5, mt:10 }}>
+      
+        <Link underline="none" component={RouterLink} to="#">
 
-      <MenuPopover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleClose}
-        sx={{
-          p: 0,
-          mt: 1.5,
-          ml: 0.75,
-          '& .MuiMenuItem-root': {
-            typography: 'body2',
-            borderRadius: 0.75,
-          },
-        }}
-      >
-        <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle2" noWrap>
-            {account.displayName}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
-          </Typography>
-        </Box>
+        <Box sx={{ mb: 1, mx: 2.5, mt:3}}/>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+          <AccountStyle >
+          
+          <Box
+            component="img"
+            src="/static/illustrations/illustration_avatar.png"
+            sx={{ width: 60, position: 'absolute', top: 25 }}
+           />
+            <Box sx={{ ml: 1, mb:5 , mx:8}}>
+              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                {account.displayName}
+              </Typography>
+              
+            </Box>
 
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+            <Stack direction="row" alignItems="center" spacing={{ xs: 2.5, sm: 1.5 }}>
+              
+              <Box
+                component="img"
+                src="/static/illustrations/illustration_avatar.png"
+                sx={{ width: 40, position: 'absolute', top: 82, right:'190px'}}
+              />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Logout
-        </MenuItem>
-      </MenuPopover>
+              <Box
+                component="img"
+                src="/static/illustrations/illustration_avatar.png"
+                sx={{ width: 40, position: 'absolute', top: 82, right:'145px' }}
+              />
+
+              <Box
+                component="img"
+                src="/static/illustrations/illustration_avatar.png"
+                sx={{ width: 40, position: 'absolute', top: 82, right:'100px' }}
+              />
+
+            </Stack>
+            
+          </AccountStyle>
+        </Link>
+      </Box>
+
+
     </>
   );
 }

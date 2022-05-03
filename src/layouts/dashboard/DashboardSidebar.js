@@ -1,23 +1,21 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+
+import { Link as RouterLink, useHistory, useLocation, useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
-// mock
-import account from '../../_mock/account';
+import { Box, Link, Divider, Button, Card, Drawer, Typography, Avatar, Stack } from '@mui/material';
+
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // components
-import Logo from '../../components/Logo';
+
 import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-//
-import navConfig from './NavConfig';
+
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 320;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -26,13 +24,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }));
 
-const AccountStyle = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(2, 2.5),
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[500_12],
-}));
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +36,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -60,52 +53,67 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+      
+     <Stack direction="column" alignItems="center" spacing={{ xs: 0, sm: 0 }}
+                 sx={{ px: 0.5, pb: 1, mt: 6 }}>
+      
+          <Typography variant="body1" sx={{ color: 'red' , opacity: 0.95, fontSize:"85px" }}>
+                0
+          </Typography>
+
+          <Typography variant="body1" sx={{ mt:2, color: 'text.primary' , opacity: 0.82 }}>
+                tasks due.
+          </Typography>
+              
+      </Stack>
+
+      <Box sx={{ px: 2.5, pb: 3, mt: 2 }}>
+
+          <Card
+            sx={{
+              py: 15,
+              flexGrow: 1,
+              boxShadow: 1,
+              textAlign: 'center',
+            }}
+            >
+            <Typography variant="body1" sx={{ color: 'text.secondary' , opacity: 0.72 }}>
+              Add tasks to view them here.
+            </Typography>
+          </Card>
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
-          <AccountStyle>
-            <Avatar src={account.photoURL} alt="photoURL" />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
-              </Typography>
+      <Box sx={{ px: 2.5, pb: 3, mt: 2 }}>
+          
+          <Card
+            sx={{
+              py: 1,
+              flexGrow: 1,
+              boxShadow: 1,
+              textAlign: 'center',
+            }}
+            >
+
+          
+            <Box sx={{ p: 1 }}>
+              <Button fullWidth disableRipple>
+                Settings
+              </Button>
             </Box>
-          </AccountStyle>
-        </Link>
+
+            <Divider sx={{ borderStyle: 'dashed' }} />
+
+            <Box sx={{ p: 1 }}>
+
+                <Button fullWidth disableRipple  onClick={() => navigate('/ecoMode', { replace: true })}>
+                   Enable Eco-Mode
+                </Button>
+           
+            </Box>
+
+          </Card>
       </Box>
 
-      <NavSection navConfig={navConfig} />
-
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/static/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h6">
-              Get more?
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
-            </Typography>
-          </Box>
-
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade to Pro
-          </Button>
-        </Stack>
-      </Box>
     </Scrollbar>
   );
 

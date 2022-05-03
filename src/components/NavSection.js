@@ -19,7 +19,7 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
 }));
 
 const ListItemIconStyle = styled(ListItemIcon)({
-  width: 22,
+  width: 30,
   height: 22,
   color: 'inherit',
   display: 'flex',
